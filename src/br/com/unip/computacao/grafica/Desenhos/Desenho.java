@@ -1,4 +1,4 @@
-package Desenhos;
+package br.com.unip.computacao.grafica.Desenhos;
 
 
 import javax.swing.*;
