@@ -98,6 +98,36 @@ public class Desenho extends JFrame {
         add(LEscalonamento);
         LEscalonamento.setBounds(600,310,100,50);
 
+        //BOTAO CISALHAMENTO NO EIXO Y
+        setLayout(null);
+        add(b7_escalaMaior);
+        b7_escalaMaior.setBounds(580,500,100,50);
+        b7_escalaMaior.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cisalhamentoY=cisalhamentoY+5;
+                repaint();
+            }
+        });
+
+        //JLABEL CISALHAMENTO
+        add(LCisalhamento);
+        LCisalhamento.setBounds(590,460,100,50);
+
+        //BOTAO RESETAR TODAS AS MUDANÇAS
+        setLayout(null);
+        add(b8_reset);
+        b8_reset.setBounds(580,600,100,50);
+        b8_reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                transladar=0;
+                rodar=0;
+                escalonamento=0;
+                cisalhamentoY=0;
+                repaint();
+            }
+        });
     }
 
     //BOTOES
@@ -110,6 +140,10 @@ public class Desenho extends JFrame {
     JButton b5_escalaMaior = new JButton("Maior");
     JButton b6_escalaMenor = new JButton("Menor");
     JLabel LEscalonamento = new JLabel("Escalonar");
+    JButton b7_escalaMaior = new JButton("Cisalhar");
+    JLabel LCisalhamento = new JLabel("Cisalhamento");
+    JButton b8_reset = new JButton("Reset");
+
 
 
     private static int POINT_SIZE = 3;
@@ -124,6 +158,7 @@ public class Desenho extends JFrame {
     int transladar;
     int rodar;
     int escalonamento;
+    int cisalhamentoY;
 
     @Override
     public void paint(Graphics g) {
@@ -137,7 +172,7 @@ public class Desenho extends JFrame {
 
         for (int i = 0; i < quantidadeDePontos; i++) {
             double cos = Math.cos((i+rodar) * distanciaEntrePontos);
-            double sin = Math.sin((i+rodar) * distanciaEntrePontos);
+            double sin = Math.sin((i+rodar+cisalhamentoY) * distanciaEntrePontos);
 
             x = (int) ( cos * raio + posicaoX );
             y = (int) ( sin * raio + posicaoY );
