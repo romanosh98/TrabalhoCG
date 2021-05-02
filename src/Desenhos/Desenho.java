@@ -41,12 +41,76 @@ public class Desenho extends JFrame {
         //JLABEL TRANSLADAR
         add(LTransladar);
         LTransladar.setBounds(600,10,100,50);
+
+        //BOTAO RODAR PARA DIREITA
+        setLayout(null);
+        add(b3_rodarDireita);
+        b3_rodarDireita.setBounds(580,200,100,50);
+        b3_rodarDireita.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rodar=rodar+5;
+                repaint();
+            }
+        });
+
+        //BOTAO RODAR PARA ESQUERDA
+        setLayout(null);
+        add(b4_rodarEsquerda);
+        b4_rodarEsquerda.setBounds(580,260,100,50);
+        b4_rodarEsquerda.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rodar=rodar-5;
+                repaint();
+            }
+        });
+
+        //JLABEL ROTAÇÃO
+        add(LRotacao);
+        LRotacao.setBounds(600,160,100,50);
+
+        //BOTAO ESCALONAMENTO PARA AFICAR MAIOR
+        setLayout(null);
+        add(b5_escalaMaior);
+        b5_escalaMaior.setBounds(580,350,100,50);
+        b5_escalaMaior.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                escalonamento=escalonamento+5;
+                repaint();
+            }
+        });
+
+        //BOTAO ESCALONAMENTO PARA FICAR MENOR
+        setLayout(null);
+        add(b6_escalaMenor);
+        b6_escalaMenor.setBounds(580,410,100,50);
+        b6_escalaMenor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                escalonamento=escalonamento-5;
+                repaint();
+            }
+        });
+
+        //JLABEL ROTAÇÃO
+        add(LEscalonamento);
+        LEscalonamento.setBounds(600,310,100,50);
+
     }
 
     //BOTOES
     JButton b1_cima = new JButton("Cima");
     JButton b2_baixo = new JButton("Baixo");
     JLabel LTransladar = new JLabel("Transladar");
+    JButton b3_rodarDireita = new JButton("Direita");
+    JButton b4_rodarEsquerda = new JButton("Esquerda");
+    JLabel LRotacao = new JLabel("Rotação");
+    JButton b5_escalaMaior = new JButton("Maior");
+    JButton b6_escalaMenor = new JButton("Menor");
+    JLabel LEscalonamento = new JLabel("Escalonar");
+
 
     private static int POINT_SIZE = 3;
     public static String qtdRetas;
@@ -58,11 +122,13 @@ public class Desenho extends JFrame {
     int x2;
     int y2;
     int transladar;
+    int rodar;
+    int escalonamento;
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        drawCircle(g, 350, 350+transladar, 100, retas, Color.BLACK);
+        drawCircle(g, 350, 350+transladar, 100+escalonamento, retas, Color.BLACK);
     }
     public void drawCircle(Graphics g, int posicaoX, int posicaoY,
                            int raio, int quantidadeDePontos, Color cor) {
@@ -70,8 +136,8 @@ public class Desenho extends JFrame {
         double distanciaEntrePontos = 2 * Math.PI / quantidadeDePontos;
 
         for (int i = 0; i < quantidadeDePontos; i++) {
-            double cos = Math.cos(i * distanciaEntrePontos);
-            double sin = Math.sin(i * distanciaEntrePontos);
+            double cos = Math.cos((i+rodar) * distanciaEntrePontos);
+            double sin = Math.sin((i+rodar) * distanciaEntrePontos);
 
             x = (int) ( cos * raio + posicaoX );
             y = (int) ( sin * raio + posicaoY );
