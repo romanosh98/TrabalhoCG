@@ -159,6 +159,7 @@ public class Desenho extends JFrame {
     int rodar;
     int escalonamento;
     int cisalhamentoY;
+    int j;
 
     @Override
     public void paint(Graphics g) {
@@ -171,22 +172,31 @@ public class Desenho extends JFrame {
         double distanciaEntrePontos = 2 * Math.PI / quantidadeDePontos;
 
         for (int i = 0; i < quantidadeDePontos; i++) {
-            double cos = Math.cos((i+rodar) * distanciaEntrePontos);
-            double sin = Math.sin((i+rodar+cisalhamentoY) * distanciaEntrePontos);
-
-            x = (int) ( cos * raio + posicaoX );
-            y = (int) ( sin * raio + posicaoY );
-            if (i % 2 == 0) {
-                x1=x;
-                y1=y;
-            } else {
-                x2=x;
-                y2=y;
+            x1 = calcx(i, distanciaEntrePontos, raio, posicaoX);
+            y1 = calcy(i, distanciaEntrePontos, raio, posicaoY);
+            if (i==quantidadeDePontos-1){
+                j=0;
+            }else{
+                j=i+1;
             }
+            x2 = calcx(j, distanciaEntrePontos, raio, posicaoX);
+            y2 = calcy(j, distanciaEntrePontos, raio, posicaoY);
+
             g.setColor(cor);
             g.fillRect(x, y, POINT_SIZE, POINT_SIZE);
             g.drawLine(x2,y2,x1,y1);
         }
+    }
+
+    public int calcx(int i, double distanciaEntrePontos, int raio, int posicaoX) {
+        double cos = Math.cos((i+rodar) * distanciaEntrePontos);
+        x = (int) ( cos * raio + posicaoX );
+        return x;
+    }
+    public int calcy(int i, double distanciaEntrePontos, int raio, int posicaoY){
+        double sin = Math.sin((i+rodar+cisalhamentoY) * distanciaEntrePontos);
+        y = (int) ( sin * raio + posicaoY );
+        return y;
     }
 
     public static void escolherRetas() {
@@ -204,5 +214,11 @@ public class Desenho extends JFrame {
                 JOptionPane.showMessageDialog(null, "Quantidades de retas preprecisam ser maior que 3 para formar uma figura Geometrica");
             }
         }
+    }
+
+    public static void main(String... args) {
+        escolherRetas();
+        JFrame desenho = new Desenho();
+
     }
 }
